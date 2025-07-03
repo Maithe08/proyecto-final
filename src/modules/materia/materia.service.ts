@@ -38,4 +38,18 @@ export class MateriaService {
     await this.materiaRepo.delete(id);
     return { message: 'Materia eliminada' };
   }
+
+  // ✅ Nuevo método
+  async getProfesoresAsignados(id: number) {
+    const materia = await this.materiaRepo.findOne({
+      where: { id },
+      relations: ['asignaciones', 'asignaciones.profesor'],
+    });
+
+    if (!materia) {
+      throw new NotFoundException('Materia no encontrada');
+    }
+
+    return materia.asignaciones.map((asig) => asig.profesor);
+  }
 }

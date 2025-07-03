@@ -5,6 +5,10 @@ import { Profesor } from './entities/profesor.entity';
 import { CreateProfesorDto } from './dto/create-profesor.dto';
 import { UpdateProfesorDto } from './dto/update-profesor.dto';
 
+// 👇 Importaciones necesarias
+import { Asignacion } from '../asignacion/entities/asignacion.entity';
+import { Materia } from '../materia/entities/materia.entity';
+
 @Injectable()
 export class ProfesorService {
   constructor(
@@ -37,5 +41,19 @@ export class ProfesorService {
     await this.findOne(id);
     await this.profesorRepo.delete(id);
     return { message: 'Profesor eliminado' };
+  }
+
+  // 🚀 Nueva función para obtener materias asignadas a un profesor
+  async getMateriasAsignadas(id: number) {
+    const profesor = await this.profesorRepo.findOne({
+      where: { id },
+      relations: ['asignaciones', 'asignaciones.materia'],
+    });
+
+    if (!profesor) {
+      throw new NotFoundException('Profesor no encontrado');
+    }
+
+    return profesor.asignaciones.map((asig) => asig.materia);
   }
 }

@@ -40,4 +40,9 @@ export class MateriaController {
   remove(@Param('id', ParseIntPipe) id: number) {
     return this.service.remove(id);
   }
+
+  @Get(':id/profesores')
+  getProfesoresAsignados(@Param('id', ParseIntPipe) id: number) {
+    return this.service.getProfesoresAsignados(id);
+  }
 }

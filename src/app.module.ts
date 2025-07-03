@@ -5,6 +5,7 @@ import { EstudianteModule } from './modules/estudiante/estudiante.module';
 import { CursoModule } from './modules/curso/curso.module';
 import { MateriaModule } from './modules/materia/materia.module';
 import { ProfesorModule } from './modules/profesor/profesor.module';
+import { AsignacionModule } from './modules/asignacion/asignacion.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { ProfesorModule } from './modules/profesor/profesor.module';
     CursoModule,
     MateriaModule,
     ProfesorModule,
+    AsignacionModule,
   ],
 })
 export class AppModule {}
