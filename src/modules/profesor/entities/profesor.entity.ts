@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import { Materia } from 'src/modules/materia/entities/materia.entity';
 
 @Entity()
 export class Profesor {
@@ -16,4 +17,7 @@ export class Profesor {
 
   @Column()
   correo: string;
+
+  @OneToMany(() => Materia, (materia) => materia.profesor)
+  materias: Materia[];
 }
