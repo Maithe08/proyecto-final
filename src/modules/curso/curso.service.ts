@@ -9,30 +9,38 @@ import { UpdateCursoDto } from './dto/update-curso.dto';
 export class CursoService {
   constructor(
     @InjectRepository(Curso)
-    private cursoRepo: Repository<Curso>,
+    private readonly cursoRepo: Repository<Curso>,
   ) {}
 
+  // Crear curso
   create(dto: CreateCursoDto) {
-    const nuevo = this.cursoRepo.create(dto);
-    return this.cursoRepo.save(nuevo);
+    const curso = this.cursoRepo.create(dto);
+    return this.cursoRepo.save(curso);
   }
 
+  // Listar todos los cursos con estudiantes y materias
   findAll() {
-    return this.cursoRepo.find();
+    return this.cursoRepo.find({ relations: ['estudiantes', 'materias'] });
   }
 
+  // Obtener un curso por ID con relaciones
   async findOne(id: number) {
-    const curso = await this.cursoRepo.findOneBy({ id });
-    if (!curso) throw new NotFoundException('Curso no encontrado');
+    const curso = await this.cursoRepo.findOne({
+      where: { id },
+      relations: ['estudiantes', 'materias'],
+    });
+    if (!curso) throw new NotFoundException(`Curso with id ${id} not found`);
     return curso;
   }
 
+  // Actualizar curso
   async update(id: number, dto: UpdateCursoDto) {
     await this.findOne(id);
     await this.cursoRepo.update(id, dto);
     return this.findOne(id);
   }
 
+  // Eliminar curso
   async remove(id: number) {
     await this.findOne(id);
     await this.cursoRepo.delete(id);

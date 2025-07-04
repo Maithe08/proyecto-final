@@ -5,9 +5,9 @@ import {
   ManyToOne,
   OneToMany,
 } from 'typeorm';
-import { Profesor } from 'src/modules/profesor/entities/profesor.entity';
-import { Curso } from 'src/modules/curso/entities/curso.entity';
-import { Asignacion } from 'src/modules/asignacion/entities/asignacion.entity';
+import { Profesor } from '../../profesor/entities/profesor.entity';
+import { Curso } from '../../curso/entities/curso.entity';
+import { Asignacion } from '../../asignacion/entities/asignacion.entity';
 
 @Entity()
 export class Materia {
@@ -23,14 +23,20 @@ export class Materia {
   @Column()
   creditos: number;
 
+  // Relación con profesor (opcional)
   @ManyToOne(() => Profesor, (profesor) => profesor.materias, {
     nullable: true,
   })
   profesor: Profesor;
 
-  @ManyToOne(() => Curso, (curso) => curso.materias, { nullable: true })
+  // Relación con curso: cada materia pertenece a un curso
+  @ManyToOne(() => Curso, (curso) => curso.materias, {
+    eager: true,
+    nullable: true,
+  })
   curso: Curso;
 
+  // Relación con asignaciones
   @OneToMany(() => Asignacion, (asig) => asig.materia)
   asignaciones: Asignacion[];
 }

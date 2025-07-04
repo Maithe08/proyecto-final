@@ -1,12 +1,6 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  OneToMany,
-  ManyToMany,
-} from 'typeorm';
-import { Materia } from 'src/modules/materia/entities/materia.entity';
-import { Estudiante } from 'src/modules/estudiante/entities/estudiante.entity';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import { Estudiante } from '../../estudiante/entities/estudiante.entity';
+import { Materia } from '../../materia/entities/materia.entity';
 
 @Entity()
 export class Curso {
@@ -22,9 +16,11 @@ export class Curso {
   @Column()
   duracionHoras: number;
 
+  // Relación con estudiantes: un curso tiene muchos estudiantes
+  @OneToMany(() => Estudiante, (estudiante) => estudiante.curso)
+  estudiantes: Estudiante[];
+
+  // Relación con materias: un curso tiene muchas materias
   @OneToMany(() => Materia, (materia) => materia.curso)
   materias: Materia[];
-
-  @ManyToMany(() => Estudiante, (estudiante) => estudiante.cursos)
-  estudiantes: Estudiante[];
 }

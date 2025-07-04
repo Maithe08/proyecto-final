@@ -2,10 +2,10 @@ import {
   Controller,
   Get,
   Post,
+  Body,
+  Param,
   Put,
   Delete,
-  Param,
-  Body,
   ParseIntPipe,
 } from '@nestjs/common';
 import { CursoService } from './curso.service';
@@ -14,30 +14,30 @@ import { UpdateCursoDto } from './dto/update-curso.dto';
 
 @Controller('cursos')
 export class CursoController {
-  constructor(private readonly service: CursoService) {}
+  constructor(private readonly cursoService: CursoService) {}
 
   @Post()
   create(@Body() dto: CreateCursoDto) {
-    return this.service.create(dto);
+    return this.cursoService.create(dto);
   }
 
   @Get()
   findAll() {
-    return this.service.findAll();
+    return this.cursoService.findAll();
   }
 
   @Get(':id')
   findOne(@Param('id', ParseIntPipe) id: number) {
-    return this.service.findOne(id);
+    return this.cursoService.findOne(id);
   }
 
   @Put(':id')
   update(@Param('id', ParseIntPipe) id: number, @Body() dto: UpdateCursoDto) {
-    return this.service.update(id, dto);
+    return this.cursoService.update(id, dto);
   }
 
   @Delete(':id')
   remove(@Param('id', ParseIntPipe) id: number) {
-    return this.service.remove(id);
+    return this.cursoService.remove(id);
   }
 }

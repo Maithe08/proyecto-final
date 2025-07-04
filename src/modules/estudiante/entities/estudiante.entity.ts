@@ -1,5 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToMany } from 'typeorm';
-import { Curso } from 'src/modules/curso/entities/curso.entity';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import { Curso } from '../../curso/entities/curso.entity';
 
 @Entity()
 export class Estudiante {
@@ -18,6 +18,11 @@ export class Estudiante {
   @Column()
   edad: number;
 
-  @ManyToMany(() => Curso, (curso) => curso.estudiantes)
-  cursos: Curso[];
+  // Relación con curso: cada estudiante pertenece a un curso
+  @ManyToOne(() => Curso, (curso) => curso.estudiantes, {
+    eager: true,
+    onDelete: 'SET NULL',
+    nullable: true,
+  })
+  curso: Curso;
 }

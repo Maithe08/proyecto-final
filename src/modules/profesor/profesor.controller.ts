@@ -44,7 +44,6 @@ export class ProfesorController {
     return this.service.remove(id);
   }
 
-  // 🚀 NUEVA RUTA: Obtener materias asignadas a un profesor
   @Get(':id/materias')
   getMateriasAsignadas(@Param('id', ParseIntPipe) id: number) {
     return this.service.getMateriasAsignadas(id);
