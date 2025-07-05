@@ -1,98 +1,215 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# 📚 Proyecto Final - Backend con NestJS
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Aplicación desarrollada en **NestJS + TypeORM + MySQL** que permite gestionar estudiantes, cursos, profesores, materias y asignaciones en un entorno académico.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+---
 
-## Description
+## 🧾 Contenido
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+* [Tecnologías](#tecnologías)
+* [Instalación](#instalación)
+* [Estructura del Proyecto](#estructura-del-proyecto)
+* [Conexión Base de Datos](#conexión-base-de-datos)
+* [Comandos útiles](#comandos-útiles)
+* [Endpoints principales](#endpoints-principales)
+* [Relaciones entre entidades](#relaciones-entre-entidades)
+* [Autor](#autor)
 
-## Project setup
+---
 
-```bash
-$ npm install
+## 🛠 Tecnologías
+
+* [NestJS](https://nestjs.com/)
+* [TypeORM](https://typeorm.io/)
+* [MySQL](https://www.mysql.com/)
+* [Node.js](https://nodejs.org/)
+
+---
+
+## ⚙ Instalación
+
+
+# Clonar repositorio
+git clone https://github.com/Maithe08/proyecto-final.git
+cd proyecto-final
+
+# Instalar dependencias
+npm install
 ```
 
-## Compile and run the project
+### Crear archivo `.env` con la siguiente configuración:
 
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+```env
+DB_HOST=localhost
+DB_PORT=3306
+DB_USERNAME=root
+DB_PASSWORD=1234
+DB_DATABASE=proyecto_final_db
 ```
 
-## Run tests
+---
 
-```bash
-# unit tests
-$ npm run test
+## 🗂 Estructura del Proyecto
 
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+```
+src/
+│
+├── modules/
+│   ├── asignacion/
+│   ├── curso/
+│   ├── estudiante/
+│   ├── materia/
+│   └── profesor/
+│
+├── app.module.ts
+└── main.ts
 ```
 
-## Deployment
+---
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+## 🧩 Conexión Base de Datos
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+La configuración está en el archivo `.env`. Asegúrate de tener corriendo tu servidor de base de datos MySQL y haber creado la base de datos `proyecto_final_db`.
 
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+---
+
+## 🚀 Comandos útiles
+
+# Instalar dependencias
+npm install
+
+# Iniciar en modo desarrollo
+npm run start:dev
+
+# Formatear el código (opcional)
+npm run totalformat
+
+---
+
+## 📌 Endpoints principales y Ejemplos JSON
+
+> Los endpoints funcionan en `http://localhost:3000`
+
+### 📚 Profesores
+
+- **Crear profesor**  
+  `POST /profesores`
+
+  ```json
+{
+  "nombre": "humberto",
+  "apellido": "ramirez",
+  "especialidad": "sociales",
+  "correo": "hm.gomez@example.com"
+}
+
+---
+
+### 📘 Materias
+
+- **Crear materia**  
+  `POST /materias`  
+  Crea una materia y la vincula a un curso mediante un `cursoId`.
+
+```json
+{
+  "nombre": "Historia Universal",
+  "codigo": "HIS101",
+  "creditos": 3,
+  "cursoId": 1
+}
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+- **Obtener materias**  
+  `GET /materias`
 
-## Resources
+- **Obtener profesores de una materia**  
+  `GET /materias/:id/profesores`
 
-Check out a few resources that may come in handy when working with NestJS:
+### 🧩 Asignaciones
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+- **Crear asignación**  
+  `POST /asignaciones`
 
-## Support
+  ```json
+  {
+  "profesorId": 2,
+  "materiaId": 1
+  }
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+- **Obtener asignaciones**  
+  `GET /asignaciones`
 
-## Stay in touch
+- **Obtener asignación por ID**  
+  `GET /asignaciones/:id`  
+  Muestra el profesor y las materias que tiene.
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+- **Actualizar asignación**  
+  `PUT /asignaciones/:id`
 
-## License
+  {
+  "profesorId": 3,
+  "materiaId": 3
+  }
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+
+### 🏫 Cursos
+
+- **Crear curso**  
+  `POST /cursos`
+
+  ```json
+  {
+  "nombre": "Curso de NestJS",
+  "descripcion": "Este curso es para aprender NestJS paso a paso.",
+  "duracionHoras": 20
+  }
+``
+
+- **Obtener cursos con materias y estudiantes**  
+  `GET /cursos`  
+  Retorna el nombre del curso, los estudiantes asociados y las materias que ofrece.
+
+### 👨‍🎓 Estudiantes
+
+- **Crear estudiante**  
+  `POST /estudiantes`  
+  Crea el estudiante y lo vincula a uno o varios cursos.
+
+  ```json
+  {
+  "nombre": "mariana",
+  "apellido": "García",
+  "correo": "mari@example.com",
+  "edad": 16,
+  "cursoId": 1
+  }
+
+- **Obtener estudiantes**  
+  `GET /estudiantes`  
+  Muestra el curso o cursos a los que pertenece cada estudiante.
+
+
+## 🔗 Relaciones entre entidades
+
+* Un **curso** tiene muchos **estudiantes** y muchas **materias**.
+* Una **materia** pertenece a un **curso** y puede estar asignada a un **profesor**.
+* Un **profesor** puede dar varias materias mediante **asignaciones**.
+* Una **asignación** vincula un **profesor** con una **materia**.
+
+---
+## ✅ Estado
+
+Proyecto funcional, permite gestionar:
+
+- Profesores asignados a materias
+- Materias vinculadas a cursos
+- Estudiantes matriculados en cursos
+- Relación completa entre cursos, materias y profesores
+
+## 👤 Autor
+
+* **Nombre:** Maithe López Cardona
+* **GitHub:** [Maithe08](https://github.com/Maithe08)
+
+---
